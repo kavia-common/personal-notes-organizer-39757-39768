@@ -18,6 +18,10 @@ In the project directory, you can run:
 Runs the app in development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+Notes:
+- This project uses Create React App (CRA). The dev server listens on the `PORT` environment variable, defaulting to `3000`. We do not set a custom port in scripts to avoid conflicts with preview systems.
+- Any `REACT_APP_*` variables are optional; the app tolerates them being undefined. See `src/envSafe.js` which is imported in `src/index.js` to normalize empty values.
+
 ### `npm test`
 
 Launches the test runner in interactive watch mode.
