@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import './App.css';
+import CalendarView from './components/CalendarView';
+import MusicPlayer from './components/MusicPlayer';
 
 /**
  * Monochrome Theme Tokens are defined via CSS variables in App.css.
@@ -171,6 +173,22 @@ export default function App() {
 
   const formatDate = (d) => new Date(d).toLocaleString();
 
+  const [activeView, setActiveView] = useState(() => {
+    try {
+      return localStorage.getItem('nav-active-view') || 'notes'; // 'notes' | 'calendar' | 'music'
+    } catch {
+      return 'notes';
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('nav-active-view', activeView);
+    } catch {
+      // ignore
+    }
+  }, [activeView]);
+
   return (
     <div className="App">
       <header className="ocean-header">
@@ -183,7 +201,30 @@ export default function App() {
             </div>
           </div>
           <div className="header-actions">
-            <div className="search-wrap">
+            <nav className="top-nav" aria-label="Primary">
+              <button
+                className={`ocean-btn ${activeView === 'notes' ? 'primary' : 'secondary'}`}
+                onClick={() => setActiveView('notes')}
+                aria-current={activeView === 'notes' ? 'page' : undefined}
+              >
+                Notes
+              </button>
+              <button
+                className={`ocean-btn ${activeView === 'calendar' ? 'primary' : 'secondary'}`}
+                onClick={() => setActiveView('calendar')}
+                aria-current={activeView === 'calendar' ? 'page' : undefined}
+              >
+                Calendar
+              </button>
+              <button
+                className={`ocean-btn ${activeView === 'music' ? 'primary' : 'secondary'}`}
+                onClick={() => setActiveView('music')}
+                aria-current={activeView === 'music' ? 'page' : undefined}
+              >
+                Music
+              </button>
+            </nav>
+            <div className="search-wrap" style={{ display: activeView === 'notes' ? 'block' : 'none' }}>
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -204,86 +245,104 @@ export default function App() {
         </div>
       </header>
 
-      <main className="ocean-main">
-        <aside className="ocean-sidebar" aria-label="Notes navigation">
-          <div className="sidebar-header">
-            <h2 className="sidebar-title">Your Notes</h2>
-            <span className="sidebar-count">{filteredNotes.length}</span>
-          </div>
-          <ul className="note-list">
-            {filteredNotes.map((n) => (
-              <li
-                key={n.id}
-                className={`note-list-item ${activeId === n.id ? 'active' : ''}`}
-                onClick={() => selectNote(n.id)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') selectNote(n.id);
-                }}
-              >
-                <div className="note-item-title">{n.title || 'Untitled'}</div>
-                <div className="note-item-meta">{formatDate(n.updatedAt)}</div>
-              </li>
-            ))}
-            {filteredNotes.length === 0 && (
-              <li className="note-empty">No notes found. Create your first note!</li>
-            )}
-          </ul>
-        </aside>
+      {activeView === 'notes' && (
+        <main className="ocean-main">
+          <aside className="ocean-sidebar" aria-label="Notes navigation">
+            <div className="sidebar-header">
+              <h2 className="sidebar-title">Your Notes</h2>
+              <span className="sidebar-count">{filteredNotes.length}</span>
+            </div>
+            <ul className="note-list">
+              {filteredNotes.map((n) => (
+                <li
+                  key={n.id}
+                  className={`note-list-item ${activeId === n.id ? 'active' : ''}`}
+                  onClick={() => selectNote(n.id)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') selectNote(n.id);
+                  }}
+                >
+                  <div className="note-item-title">{n.title || 'Untitled'}</div>
+                  <div className="note-item-meta">{formatDate(n.updatedAt)}</div>
+                </li>
+              ))}
+              {filteredNotes.length === 0 && (
+                <li className="note-empty">No notes found. Create your first note!</li>
+              )}
+            </ul>
+          </aside>
 
-        <section className="ocean-content" aria-live="polite">
-          {activeNote ? (
-            <div className="note-view">
-              <div className="note-view-header">
-                <h2 className="note-view-title">{activeNote.title || 'Untitled'}</h2>
-                <div className="note-view-actions">
-                  <button
-                    className="ocean-btn secondary"
-                    onClick={() => openEditModal(activeNote)}
-                    aria-label="Edit note"
-                  >
-                    ✏️ Edit
-                  </button>
-                  <button
-                    className="ocean-btn danger"
-                    onClick={() => deleteNote(activeNote.id)}
-                    aria-label="Delete note"
-                  >
-                    🗑️ Delete
+          <section className="ocean-content" aria-live="polite">
+            {activeNote ? (
+              <div className="note-view">
+                <div className="note-view-header">
+                  <h2 className="note-view-title">{activeNote.title || 'Untitled'}</h2>
+                  <div className="note-view-actions">
+                    <button
+                      className="ocean-btn secondary"
+                      onClick={() => openEditModal(activeNote)}
+                      aria-label="Edit note"
+                    >
+                      ✏️ Edit
+                    </button>
+                    <button
+                      className="ocean-btn danger"
+                      onClick={() => deleteNote(activeNote.id)}
+                      aria-label="Delete note"
+                    >
+                      🗑️ Delete
+                    </button>
+                  </div>
+                </div>
+                <div className="note-view-meta">
+                  <span>Created: {formatDate(activeNote.createdAt)}</span>
+                  <span>Updated: {formatDate(activeNote.updatedAt)}</span>
+                </div>
+                <article className="note-view-content">
+                  {activeNote.content ? activeNote.content : <em>No content</em>}
+                </article>
+              </div>
+            ) : (
+              <div className="note-placeholder">
+                <div className="placeholder-card">
+                  <h3>Welcome!</h3>
+                  <p>Select a note from the left, or create a new one to get started.</p>
+                  <button className="ocean-btn primary" onClick={openCreateModal}>
+                    ➕ Create Note
                   </button>
                 </div>
               </div>
-              <div className="note-view-meta">
-                <span>Created: {formatDate(activeNote.createdAt)}</span>
-                <span>Updated: {formatDate(activeNote.updatedAt)}</span>
-              </div>
-              <article className="note-view-content">
-                {activeNote.content ? activeNote.content : <em>No content</em>}
-              </article>
-            </div>
-          ) : (
-            <div className="note-placeholder">
-              <div className="placeholder-card">
-                <h3>Welcome!</h3>
-                <p>Select a note from the left, or create a new one to get started.</p>
-                <button className="ocean-btn primary" onClick={openCreateModal}>
-                  ➕ Create Note
-                </button>
-              </div>
-            </div>
-          )}
-        </section>
+            )}
+          </section>
 
-        <button
-          className="fab-create"
-          onClick={openCreateModal}
-          aria-label="Create a new note"
-          title="Create note"
-        >
-          +
-        </button>
-      </main>
+          <button
+            className="fab-create"
+            onClick={openCreateModal}
+            aria-label="Create a new note"
+            title="Create note"
+          >
+            +
+          </button>
+        </main>
+      )}
+
+      {activeView === 'calendar' && (
+        <main className="ocean-main" style={{ gridTemplateColumns: '1fr' }}>
+          <section className="ocean-content">
+            <CalendarView />
+          </section>
+        </main>
+      )}
+
+      {activeView === 'music' && (
+        <main className="ocean-main" style={{ gridTemplateColumns: '1fr' }}>
+          <section className="ocean-content">
+            <MusicPlayer />
+          </section>
+        </main>
+      )}
 
       {isModalOpen && (
         <div className="ocean-modal-backdrop" role="dialog" aria-modal="true">
