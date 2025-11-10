@@ -20,35 +20,36 @@
   --gradient: linear-gradient(135deg, rgba(0,0,0,0.05), rgba(0,0,0,0));
 
   /* Liquid glass tokens (centralized intensity controls) */
-  --glass-opacity: 0.42;                /* base glass translucency (light) */
-  --glass-opacity-strong: 0.58;         /* stronger glass (modals/header) */
-  --glass-contrast: 1.1;                /* slight contrast bump for clarity */
-  --glass-saturation: 1.35;             /* slight saturation for background separation */
+  --glass-opacity: 0.46;                /* base glass translucency (light) */
+  --glass-opacity-strong: 0.62;         /* stronger glass (modals/header) */
+  --glass-contrast: 1.2;                /* boosted contrast for clearer refraction */
+  --glass-brightness: 1.06;             /* subtle brightness for highlights */
+  --glass-saturation: 1.4;              /* slight saturation for background separation */
 
   --glass-bg: rgba(255,255,255,var(--glass-opacity));
   --glass-bg-strong: rgba(255,255,255,var(--glass-opacity-strong));
-  --glass-border: rgba(0,0,0,0.18);
-  --glass-border-strong: rgba(0,0,0,0.26);
-  --glass-inner: inset 0 1px 0 rgba(255,255,255,0.42);
-  --glass-outer: 0 16px 48px rgba(0,0,0,0.16);  /* deeper outer shadow for depth */
-  --glass-inner-shadow: inset 0 8px 24px rgba(0,0,0,0.06); /* soft inner for depth */
+  --glass-border: rgba(0,0,0,0.2);
+  --glass-border-strong: rgba(0,0,0,0.28);
+  --glass-inner: inset 0 1px 0 rgba(255,255,255,0.5);
+  --glass-outer: 0 20px 60px rgba(0,0,0,0.2);  /* deeper outer shadow for depth */
+  --glass-inner-shadow: inset 0 10px 28px rgba(0,0,0,0.08); /* soft inner for depth */
 
-  /* Increase blur for a stronger liquid-glass feel */
-  --glass-blur: 22px; /* target ~18-24px */
+  /* Increase blur for a stronger liquid-glass feel (28–36px tier) */
+  --glass-blur: 32px; /* target ~28-36px */
 
   /* Specular highlights (brighter and larger) */
   --glass-sheen: linear-gradient(
-    115deg,
-    rgba(255,255,255,0.55) 0%,
-    rgba(255,255,255,0.28) 24%,
-    rgba(255,255,255,0.08) 42%,
-    rgba(255,255,255,0) 65%
+    112deg,
+    rgba(255,255,255,0.68) 0%,
+    rgba(255,255,255,0.36) 22%,
+    rgba(255,255,255,0.12) 44%,
+    rgba(255,255,255,0) 66%
   );
   --glass-streak: linear-gradient(
-    to right,
-    rgba(255,255,255,0.55) 0%,
-    rgba(255,255,255,0.12) 34%,
-    rgba(255,255,255,0) 68%
+    8deg,
+    rgba(255,255,255,0.65) 0%,
+    rgba(255,255,255,0.16) 38%,
+    rgba(255,255,255,0) 72%
   );
 
   /* Motion */
@@ -72,30 +73,31 @@
   --gradient: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(0,0,0,0));
 
   /* Dark glass tuning (match intensity while maintaining readability) */
-  --glass-opacity: 0.34;
-  --glass-opacity-strong: 0.52;
-  --glass-contrast: 1.08;
-  --glass-saturation: 1.2;
+  --glass-opacity: 0.36;
+  --glass-opacity-strong: 0.56;
+  --glass-contrast: 1.15;
+  --glass-brightness: 1.04;
+  --glass-saturation: 1.25;
 
   --glass-bg: rgba(21,21,21,var(--glass-opacity));
   --glass-bg-strong: rgba(21,21,21,var(--glass-opacity-strong));
-  --glass-border: rgba(255,255,255,0.14);
-  --glass-border-strong: rgba(255,255,255,0.22);
-  --glass-inner: inset 0 1px 0 rgba(255,255,255,0.24);
-  --glass-outer: 0 18px 58px rgba(0,0,0,0.55);
-  --glass-inner-shadow: inset 0 10px 26px rgba(0,0,0,0.18);
+  --glass-border: rgba(255,255,255,0.16);
+  --glass-border-strong: rgba(255,255,255,0.26);
+  --glass-inner: inset 0 1px 0 rgba(255,255,255,0.28);
+  --glass-outer: 0 22px 64px rgba(0,0,0,0.6);
+  --glass-inner-shadow: inset 0 12px 30px rgba(0,0,0,0.22);
 
   --glass-sheen: linear-gradient(
-    115deg,
-    rgba(255,255,255,0.22) 0%,
-    rgba(255,255,255,0.12) 28%,
-    rgba(255,255,255,0.06) 42%,
-    rgba(255,255,255,0) 65%
+    112deg,
+    rgba(255,255,255,0.28) 0%,
+    rgba(255,255,255,0.16) 26%,
+    rgba(255,255,255,0.08) 44%,
+    rgba(255,255,255,0) 66%
   );
   --glass-streak: linear-gradient(
-    to right,
-    rgba(255,255,255,0.24) 0%,
-    rgba(255,255,255,0.06) 28%,
+    8deg,
+    rgba(255,255,255,0.28) 0%,
+    rgba(255,255,255,0.08) 32%,
     rgba(255,255,255,0) 62%
   );
 }
@@ -140,9 +142,9 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .glass {
-    /* boost contrast/saturation with higher blur */
-    -webkit-backdrop-filter: saturate(var(--glass-saturation)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
-    backdrop-filter: saturate(var(--glass-saturation)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    /* boost contrast/brightness/saturation with higher blur */
+    -webkit-backdrop-filter: brightness(var(--glass-brightness)) saturate(var(--glass-saturation)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    backdrop-filter: brightness(var(--glass-brightness)) saturate(var(--glass-saturation)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
     background: var(--glass-bg);
   }
 }
@@ -150,10 +152,10 @@ body {
 @supports not ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .glass {
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.16), rgba(0,0,0,0.04)) ,
+      linear-gradient(180deg, rgba(255,255,255,0.22), rgba(0,0,0,0.06)) ,
       var(--glass-bg);
     border-color: var(--glass-border-strong);
-    box-shadow: 0 18px 46px rgba(0,0,0,0.2);
+    box-shadow: 0 22px 56px rgba(0,0,0,0.24);
   }
 }
 
@@ -176,10 +178,10 @@ body {
   background: var(--glass-sheen);
   pointer-events: none;
   mix-blend-mode: screen;
-  opacity: .68;
+  opacity: .75;
 }
 [data-theme="dark"] .sheen::before {
-  opacity: .42;
+  opacity: .5;
 }
 
 /* Specular light streak accent (subtle but more pronounced) */
@@ -188,16 +190,16 @@ body {
   position: absolute;
   top: -35%;
   left: -18%;
-  width: 70%;
-  height: 220%;
+  width: 78%;
+  height: 230%;
   background: var(--glass-streak);
   transform: rotate(10deg);
   pointer-events: none;
-  opacity: .32;
+  opacity: .38;
   filter: blur(1.2px);
 }
 [data-theme="dark"] .streak::after {
-  opacity: .22;
+  opacity: .28;
 }
 
 /* Interactive elevation & parallax-lite */
@@ -206,8 +208,8 @@ body {
 }
 .hover-elevate:hover {
   transform: translateY(-3px);
-  box-shadow: 0 22px 54px rgba(0,0,0,0.22);
-  filter: saturate(1.02);
+  box-shadow: 0 26px 60px rgba(0,0,0,0.26);
+  filter: saturate(1.04) brightness(1.02);
 }
 @media (prefers-reduced-motion: reduce) {
   .hover-elevate:hover { transform: none; }
@@ -240,8 +242,8 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .ocean-header {
-    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .15)) contrast(calc(var(--glass-contrast) + .05)) blur(calc(var(--glass-blur) - 2px));
-    backdrop-filter: saturate(calc(var(--glass-saturation) + .15)) contrast(calc(var(--glass-contrast) + .05)) blur(calc(var(--glass-blur) - 2px));
+    -webkit-backdrop-filter: brightness(calc(var(--glass-brightness) + .02)) saturate(calc(var(--glass-saturation) + .18)) contrast(calc(var(--glass-contrast) + .08)) blur(calc(var(--glass-blur) - 2px));
+    backdrop-filter: brightness(calc(var(--glass-brightness) + .02)) saturate(calc(var(--glass-saturation) + .18)) contrast(calc(var(--glass-contrast) + .08)) blur(calc(var(--glass-blur) - 2px));
   }
 }
 .ocean-header.sheen::before { opacity: .5; }
@@ -255,10 +257,12 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   /* inner gradient mask behind text for WCAG contrast */
-  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.0));
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.68), rgba(255,255,255,0.0));
 }
 [data-theme="dark"] .ocean-header-content {
-  background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0));
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.42), rgba(0,0,0,0));
 }
 
 .brand {
@@ -307,8 +311,8 @@ body {
   .search-input,
   .field-input,
   .field-textarea {
-    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .05)) contrast(var(--glass-contrast)) blur(calc(var(--glass-blur) - 6px));
-    backdrop-filter: saturate(calc(var(--glass-saturation) + .05)) contrast(var(--glass-contrast)) blur(calc(var(--glass-blur) - 6px));
+    -webkit-backdrop-filter: brightness(var(--glass-brightness)) saturate(calc(var(--glass-saturation) + .06)) contrast(var(--glass-contrast)) blur(calc(var(--glass-blur) - 6px));
+    backdrop-filter: brightness(var(--glass-brightness)) saturate(calc(var(--glass-saturation) + .06)) contrast(var(--glass-contrast)) blur(calc(var(--glass-blur) - 6px));
   }
 }
 
@@ -326,7 +330,7 @@ body {
 .search-input:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 4px rgba(0,0,0,0.15);
+  box-shadow: 0 0 0 5px rgba(0,0,0,0.18);
 }
 
 /* Main layout */
@@ -358,8 +362,8 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .ocean-sidebar {
-    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
-    backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    -webkit-backdrop-filter: brightness(var(--glass-brightness)) saturate(calc(var(--glass-saturation) + .12)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    backdrop-filter: brightness(var(--glass-brightness)) saturate(calc(var(--glass-saturation) + .12)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
   }
 }
 .ocean-sidebar.sheen::before { opacity: .35; }
@@ -451,26 +455,26 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .ocean-content {
-    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .15)) contrast(calc(var(--glass-contrast) + .05)) blur(calc(var(--glass-blur) + 2px));
-    backdrop-filter: saturate(calc(var(--glass-saturation) + .15)) contrast(calc(var(--glass-contrast) + .05)) blur(calc(var(--glass-blur) + 2px));
+    -webkit-backdrop-filter: brightness(calc(var(--glass-brightness) + .02)) saturate(calc(var(--glass-saturation) + .18)) contrast(calc(var(--glass-contrast) + .08)) blur(calc(var(--glass-blur) + 2px));
+    backdrop-filter: brightness(calc(var(--glass-brightness) + .02)) saturate(calc(var(--glass-saturation) + .18)) contrast(calc(var(--glass-contrast) + .08)) blur(calc(var(--glass-blur) + 2px));
   }
 }
-.ocean-content.sheen::before { opacity: .55; }
-.ocean-content.streak::after { opacity: .28; }
+.ocean-content.sheen::before { opacity: .62; }
+.ocean-content.streak::after { opacity: .34; }
 
 /* add subtle inner top gradient to support text contrast in content headings */
 .ocean-content .note-view-header,
 .calendar-grid-head,
 .lib-header {
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.0)),
+    linear-gradient(180deg, rgba(255,255,255,0.68), rgba(255,255,255,0.0)),
     var(--color-surface-2);
 }
 [data-theme="dark"] .ocean-content .note-view-header,
 [data-theme="dark"] .calendar-grid-head,
 [data-theme="dark"] .lib-header {
   background:
-    linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.0)),
+    linear-gradient(180deg, rgba(0,0,0,0.42), rgba(0,0,0,0.0)),
     var(--color-surface-2);
 }
 
@@ -604,7 +608,7 @@ body {
   position: absolute;
   inset: 0;
   background: var(--glass-streak);
-  opacity: .18;
+  opacity: .24;
   transform: translateX(-10%) rotate(12deg);
   pointer-events: none;
 }
@@ -643,8 +647,8 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .ocean-modal {
-    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .2)) contrast(calc(var(--glass-contrast) + .08)) blur(calc(var(--glass-blur) + 4px));
-    backdrop-filter: saturate(calc(var(--glass-saturation) + .2)) contrast(calc(var(--glass-contrast) + .08)) blur(calc(var(--glass-blur) + 4px));
+    -webkit-backdrop-filter: brightness(calc(var(--glass-brightness) + .03)) saturate(calc(var(--glass-saturation) + .22)) contrast(calc(var(--glass-contrast) + .12)) blur(calc(var(--glass-blur) + 4px));
+    backdrop-filter: brightness(calc(var(--glass-brightness) + .03)) saturate(calc(var(--glass-saturation) + .22)) contrast(calc(var(--glass-contrast) + .12)) blur(calc(var(--glass-blur) + 4px));
   }
 }
 .ocean-modal.sheen::before { opacity: .55; }
@@ -656,12 +660,12 @@ body {
   padding: 12px 14px;
   border-bottom: 1px dashed var(--color-border);
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0)),
+    linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0)),
     linear-gradient(180deg, rgba(0,0,0,0.04), transparent);
 }
 [data-theme="dark"] .modal-header {
   background:
-    linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0)),
+    linear-gradient(180deg, rgba(0,0,0,0.48), rgba(0,0,0,0)),
     linear-gradient(180deg, rgba(0,0,0,0.04), transparent);
 }
 
@@ -696,7 +700,7 @@ body {
 .field-textarea:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 4px rgba(0,0,0,0.15);
+  box-shadow: 0 0 0 5px rgba(0,0,0,0.18);
 }
 
 .modal-footer {
@@ -706,12 +710,12 @@ body {
   padding: 12px 14px;
   border-top: 1px dashed var(--color-border);
   background:
-    linear-gradient(0deg, rgba(255,255,255,0.6), rgba(255,255,255,0)),
+    linear-gradient(0deg, rgba(255,255,255,0.72), rgba(255,255,255,0)),
     linear-gradient(0deg, rgba(0,0,0,0.04), transparent);
 }
 [data-theme="dark"] .modal-footer {
   background:
-    linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0)),
+    linear-gradient(0deg, rgba(0,0,0,0.48), rgba(0,0,0,0)),
     linear-gradient(0deg, rgba(0,0,0,0.04), transparent);
 }
 
@@ -770,14 +774,16 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .calendar-grid {
-    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
-    backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    -webkit-backdrop-filter: brightness(var(--glass-brightness)) saturate(calc(var(--glass-saturation) + .12)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    backdrop-filter: brightness(var(--glass-brightness)) saturate(calc(var(--glass-saturation) + .12)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
   }
 }
 .calendar-grid-head {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  background: var(--color-surface-2);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.64), rgba(255,255,255,0)),
+    var(--color-surface-2);
   border-bottom: 1px dashed var(--color-border);
 }
 .calendar-grid-headcell {
@@ -806,8 +812,8 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .calendar-cell {
-    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .05)) contrast(var(--glass-contrast)) blur(calc(var(--glass-blur) - 6px));
-    backdrop-filter: saturate(calc(var(--glass-saturation) + .05)) contrast(var(--glass-contrast)) blur(calc(var(--glass-blur) - 6px));
+    -webkit-backdrop-filter: brightness(var(--glass-brightness)) saturate(calc(var(--glass-saturation) + .06)) contrast(var(--glass-contrast)) blur(calc(var(--glass-blur) - 6px));
+    backdrop-filter: brightness(var(--glass-brightness)) saturate(calc(var(--glass-saturation) + .06)) contrast(var(--glass-contrast)) blur(calc(var(--glass-blur) - 6px));
   }
 }
 .calendar-cell.week {
@@ -850,21 +856,21 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .calendar-day-card {
-    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
-    backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    -webkit-backdrop-filter: brightness(var(--glass-brightness)) saturate(calc(var(--glass-saturation) + .12)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    backdrop-filter: brightness(var(--glass-brightness)) saturate(calc(var(--glass-saturation) + .12)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
   }
 }
 .calendar-day-date {
   padding: 12px;
   font-weight: 700;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0)),
+    linear-gradient(180deg, rgba(255,255,255,0.68), rgba(255,255,255,0)),
     var(--color-surface-2);
   border-bottom: 1px dashed var(--color-border);
 }
 [data-theme="dark"] .calendar-day-date {
   background:
-    linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0)),
+    linear-gradient(180deg, rgba(0,0,0,0.42), rgba(0,0,0,0)),
     var(--color-surface-2);
 }
 .calendar-day-body {
@@ -921,8 +927,8 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .music-player {
-    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
-    backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    -webkit-backdrop-filter: brightness(var(--glass-brightness)) saturate(calc(var(--glass-saturation) + .12)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    backdrop-filter: brightness(var(--glass-brightness)) saturate(calc(var(--glass-saturation) + .12)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
   }
 }
 .music-player .controls {
@@ -952,8 +958,8 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .music-library {
-    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
-    backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    -webkit-backdrop-filter: brightness(var(--glass-brightness)) saturate(calc(var(--glass-saturation) + .12)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    backdrop-filter: brightness(var(--glass-brightness)) saturate(calc(var(--glass-saturation) + .12)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
   }
 }
 .lib-header {
@@ -963,12 +969,12 @@ body {
   padding: 10px 12px;
   border-bottom: 1px dashed var(--color-border);
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0)),
+    linear-gradient(180deg, rgba(255,255,255,0.68), rgba(255,255,255,0)),
     var(--color-surface-2);
 }
 [data-theme="dark"] .lib-header {
   background:
-    linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0)),
+    linear-gradient(180deg, rgba(0,0,0,0.42), rgba(0,0,0,0)),
     var(--color-surface-2);
 }
 .lib-title {
