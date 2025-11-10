@@ -1,5 +1,5 @@
 /* Monochrome Theme */
-/* Centralized grayscale variables */
+/* Centralized grayscale variables plus liquid-glass tokens and utilities */
 :root {
   /* Core grayscale tokens (light theme) */
   --color-bg: #ffffff;
@@ -18,6 +18,20 @@
 
   /* Neutral gradient (no color) */
   --gradient: linear-gradient(135deg, rgba(0,0,0,0.04), rgba(0,0,0,0));
+
+  /* Liquid glass tokens */
+  --glass-bg: rgba(255,255,255,0.45);           /* light translucent base */
+  --glass-bg-strong: rgba(255,255,255,0.6);
+  --glass-border: rgba(0,0,0,0.14);
+  --glass-border-strong: rgba(0,0,0,0.22);
+  --glass-inner: inset 0 1px 0 rgba(255,255,255,0.35);
+  --glass-outer: 0 10px 30px rgba(0,0,0,0.10);
+  --glass-blur: 12px;
+  --glass-sheen: linear-gradient(120deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.08) 24%, rgba(0,0,0,0) 60%);
+  --glass-streak: linear-gradient( to right, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0) 60%);
+
+  /* Motion */
+  --elevate: cubic-bezier(.2,.7,.2,1);
 }
 
 /* Dark mode grayscale overrides */
@@ -35,6 +49,14 @@
   --shadow-sm: 0 1px 0 rgba(0,0,0,0.2);
 
   --gradient: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0,0,0,0));
+
+  /* Dark glass tuning */
+  --glass-bg: rgba(21,21,21,0.45);
+  --glass-bg-strong: rgba(21,21,21,0.7);
+  --glass-border: rgba(255,255,255,0.10);
+  --glass-border-strong: rgba(255,255,255,0.18);
+  --glass-sheen: linear-gradient(120deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 30%, rgba(255,255,255,0) 60%);
+  --glass-streak: linear-gradient(to right, rgba(255,255,255,0.15), rgba(255,255,255,0.02) 28%, rgba(255,255,255,0) 60%);
 }
 
 /* Base reset */
@@ -46,6 +68,88 @@ body {
   color: var(--color-text);
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   line-height: 1.5;
+}
+
+/* Accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Liquid-glass utilities */
+/* Frosted translucent container with graceful fallback when no backdrop-filter */
+.glass {
+  position: relative;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--glass-outer), var(--glass-inner);
+  overflow: hidden;
+}
+@supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+  .glass {
+    -webkit-backdrop-filter: saturate(140%) blur(var(--glass-blur));
+    backdrop-filter: saturate(140%) blur(var(--glass-blur));
+    background: var(--glass-bg);
+  }
+}
+
+/* Heavier glass, e.g., modals and header */
+.glass-strong {
+  background: var(--glass-bg-strong);
+  border-color: var(--glass-border-strong);
+}
+
+/* Anisotropic sheen overlay */
+.sheen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--glass-sheen);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: .55;
+}
+[data-theme="dark"] .sheen::before {
+  opacity: .35;
+}
+
+/* Specular light streak accent (subtle) */
+.streak::after {
+  content: "";
+  position: absolute;
+  top: -30%;
+  left: -20%;
+  width: 60%;
+  height: 200%;
+  background: var(--glass-streak);
+  transform: rotate(8deg);
+  pointer-events: none;
+  opacity: .25;
+  filter: blur(1px);
+}
+[data-theme="dark"] .streak::after {
+  opacity: .18;
+}
+
+/* Interactive elevation & parallax-lite */
+.hover-elevate {
+  transition: transform .25s var(--elevate), box-shadow .25s var(--elevate), border-color .25s var(--elevate), background .25s var(--elevate);
+}
+.hover-elevate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hover-elevate:hover { transform: none; }
+}
+
+/* Focus visibility with contrast */
+:where(button, [role="button"], input, textarea, select, .focusable):focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 /* App container */
@@ -60,10 +164,17 @@ body {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: var(--gradient);
-  backdrop-filter: saturate(140%) blur(6px);
   border-bottom: 1px solid var(--color-border);
+  /* apply glass */
+  background: var(--glass-bg);
 }
+@supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+  .ocean-header {
+    -webkit-backdrop-filter: saturate(160%) blur(calc(var(--glass-blur) - 4px));
+    backdrop-filter: saturate(160%) blur(calc(var(--glass-blur) - 4px));
+  }
+}
+.ocean-header.sheen::before { opacity: .4; }
 
 .ocean-header-content {
   display: flex;
@@ -108,23 +219,35 @@ body {
   position: relative;
 }
 
+/* Inputs: glassy fields */
+.search-input,
+.field-input,
+.field-textarea {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--color-text);
+  box-shadow: var(--shadow-sm);
+}
+@supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+  .search-input,
+  .field-input,
+  .field-textarea {
+    -webkit-backdrop-filter: saturate(130%) blur(calc(var(--glass-blur) - 6px));
+    backdrop-filter: saturate(130%) blur(calc(var(--glass-blur) - 6px));
+  }
+}
+
 .search-input {
   padding: 10px 12px;
   padding-left: 36px;
   border-radius: 999px;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text);
   min-width: 220px;
-  box-shadow: var(--shadow);
-  /* monochrome icon using currentColor-muted */
   color-scheme: light dark;
   background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M21 21l-4.3-4.3'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: 10px center;
   transition: border-color .2s ease, box-shadow .2s ease, transform .08s ease;
 }
-
 .search-input:focus {
   outline: none;
   border-color: var(--color-accent);
@@ -144,11 +267,11 @@ body {
 
 /* Sidebar */
 .ocean-sidebar {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   padding: 12px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--glass-outer);
   height: calc(100vh - 140px);
   position: sticky;
   top: 84px;
@@ -156,7 +279,15 @@ body {
   display: flex;
   flex-direction: column;
 }
+@supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+  .ocean-sidebar {
+    -webkit-backdrop-filter: saturate(140%) blur(var(--glass-blur));
+    backdrop-filter: saturate(140%) blur(var(--glass-blur));
+  }
+}
+.ocean-sidebar.sheen::before { opacity: .35; }
 
+/* Sidebar header and count remain readable */
 .sidebar-header {
   display: flex;
   align-items: center;
@@ -188,22 +319,22 @@ body {
   overflow: auto;
 }
 
+/* Note item uses hover-elevate with subtle sheen */
 .note-list-item {
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
   padding: 10px 12px;
   margin: 8px 0;
-  background: var(--color-surface);
+  background: var(--glass-bg);
   cursor: pointer;
-  transition: transform 0.08s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition: transform .12s var(--elevate), box-shadow .22s var(--elevate), border-color .22s var(--elevate), background .22s var(--elevate);
+  position: relative;
 }
-
 .note-list-item:hover {
   transform: translateY(-1px);
-  box-shadow: var(--shadow);
-  border-color: rgba(0,0,0,0.35);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.16);
+  border-color: var(--glass-border-strong);
 }
-
 .note-list-item.active {
   outline: 2px solid rgba(0,0,0,0.3);
   border-color: var(--color-accent);
@@ -227,17 +358,26 @@ body {
   padding: 22px 8px;
 }
 
-/* Content area */
+/* Content area uses glass card */
 .ocean-content {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--glass-outer);
   min-height: calc(100vh - 140px);
   padding: clamp(14px, 2vw, 24px);
   display: flex;
   flex-direction: column;
+  position: relative;
 }
+@supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+  .ocean-content {
+    -webkit-backdrop-filter: saturate(140%) blur(var(--glass-blur));
+    backdrop-filter: saturate(140%) blur(var(--glass-blur));
+  }
+}
+.ocean-content.sheen::before { opacity: .35; }
+.ocean-content.streak::after { opacity: .16; }
 
 .note-view {
   display: flex;
@@ -295,36 +435,34 @@ body {
   border-radius: 16px;
 }
 
-/* Buttons */
+/* Buttons: add glass ghost and hover highlights */
 .ocean-btn {
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
   color: var(--color-text);
   padding: 8px 12px;
   border-radius: 12px;
   cursor: pointer;
-  transition: transform 0.08s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  transition: transform .12s var(--elevate), box-shadow .2s var(--elevate), border-color .2s var(--elevate), background .2s var(--elevate), color .2s var(--elevate);
   box-shadow: var(--shadow-sm);
 }
+.ocean-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  border-color: var(--glass-border-strong);
+}
+.ocean-btn:active {
+  transform: translateY(0);
+}
 
-/* Secondary: outline-only, monochrome */
+/* Secondary stays outline/translucent */
 .ocean-btn.secondary {
   background: transparent;
   color: var(--color-text);
   border-color: #888888;
 }
 
-.ocean-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow);
-  border-color: #9a9a9a;
-}
-
-.ocean-btn:active {
-  transform: translateY(0);
-}
-
-/* Primary: solid black (or white on dark) */
+/* Primary: solid black/white for contrast reliability */
 .ocean-btn.primary {
   background: var(--color-accent);
   color: var(--color-accent-contrast);
@@ -338,14 +476,14 @@ body {
   border-color: #1a1a1a;
 }
 
-/* Ghost: text-only */
+/* Ghost: text-only but keep visible focus */
 .ocean-btn.ghost {
   background: transparent;
   color: var(--color-text);
   border-color: transparent;
 }
 
-/* FAB */
+/* FAB with slight specular */
 .fab-create {
   position: fixed;
   bottom: 22px;
@@ -353,7 +491,7 @@ body {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--glass-border-strong);
   background: var(--color-accent);
   color: var(--color-accent-contrast);
   font-size: 28px;
@@ -362,20 +500,29 @@ body {
   place-items: center;
   cursor: pointer;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
-  transition: transform .1s ease, box-shadow .2s ease, filter .2s ease;
+  transition: transform .1s var(--elevate), box-shadow .2s var(--elevate), filter .2s var(--elevate);
+  position: fixed;
+  overflow: hidden;
 }
-
+.fab-create::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--glass-streak);
+  opacity: .18;
+  transform: translateX(-10%) rotate(12deg);
+  pointer-events: none;
+}
 .fab-create:hover {
   transform: translateY(-2px) scale(1.03);
   box-shadow: 0 22px 46px rgba(0, 0, 0, 0.45);
   filter: brightness(1.05);
 }
-
 .fab-create:active {
   transform: translateY(0) scale(0.98);
 }
 
-/* Modal */
+/* Modal: stronger glass for depth */
 .ocean-modal-backdrop {
   position: fixed;
   inset: 0;
@@ -389,13 +536,21 @@ body {
 
 .ocean-modal {
   width: min(720px, 96vw);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border-strong);
   border-radius: 16px;
   box-shadow: var(--shadow);
   overflow: hidden;
   animation: slideIn .18s ease;
+  position: relative;
 }
+@supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+  .ocean-modal {
+    -webkit-backdrop-filter: saturate(160%) blur(calc(var(--glass-blur) + 2px));
+    backdrop-filter: saturate(160%) blur(calc(var(--glass-blur) + 2px));
+  }
+}
+.ocean-modal.sheen::before { opacity: .45; }
 
 .modal-header {
   display: flex;
@@ -430,12 +585,9 @@ body {
 
 .field-input,
 .field-textarea {
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text);
   border-radius: 12px;
   padding: 10px 12px;
-  transition: border-color .2s ease, box-shadow .2s ease;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
 }
 
 .field-textarea {
@@ -468,14 +620,17 @@ body {
   to { transform: translateY(0); opacity: 1 }
 }
 
-/* Top navigation tweaks */
+/* Top navigation tweaks act as tabs; ensure contrast */
 .top-nav {
   display: flex;
   gap: 8px;
   margin-right: 8px;
 }
+.top-nav .ocean-btn.primary {
+  /* keep strong fill for contrast compliance */
+}
 
-/* Calendar styles */
+/* Calendar styles with glass containers */
 .calendar-wrap {
   display: grid;
   gap: 14px;
@@ -499,10 +654,18 @@ body {
   letter-spacing: 0.2px;
 }
 .calendar-grid {
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: var(--shadow);
+  box-shadow: var(--glass-outer);
+  background: var(--glass-bg);
+  position: relative;
+}
+@supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+  .calendar-grid {
+    -webkit-backdrop-filter: saturate(140%) blur(var(--glass-blur));
+    backdrop-filter: saturate(140%) blur(var(--glass-blur));
+  }
 }
 .calendar-grid-head {
   display: grid;
@@ -524,7 +687,7 @@ body {
   grid-template-columns: repeat(7, 1fr);
 }
 .calendar-cell {
-  background: var(--color-surface);
+  background: var(--glass-bg);
   border-right: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
   padding: 10px;
@@ -532,7 +695,13 @@ body {
   min-height: 84px;
   position: relative;
   cursor: pointer;
-  transition: background .15s ease, transform .06s ease, box-shadow .2s ease;
+  transition: background .15s ease, transform .06s ease, box-shadow .2s ease, border-color .2s ease;
+}
+@supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+  .calendar-cell {
+    -webkit-backdrop-filter: saturate(130%) blur(calc(var(--glass-blur) - 8px));
+    backdrop-filter: saturate(130%) blur(calc(var(--glass-blur) - 8px));
+  }
 }
 .calendar-cell.week {
   min-height: 120px;
@@ -564,10 +733,17 @@ body {
   display: grid;
 }
 .calendar-day-card {
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--glass-outer);
   overflow: hidden;
+  background: var(--glass-bg);
+}
+@supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+  .calendar-day-card {
+    -webkit-backdrop-filter: saturate(140%) blur(var(--glass-blur));
+    backdrop-filter: saturate(140%) blur(var(--glass-blur));
+  }
 }
 .calendar-day-date {
   padding: 12px;
@@ -619,11 +795,17 @@ body {
 .music-player {
   display: grid;
   gap: 12px;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--glass-outer);
   padding: 12px;
-  background: var(--color-surface);
+  background: var(--glass-bg);
+}
+@supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+  .music-player {
+    -webkit-backdrop-filter: saturate(140%) blur(var(--glass-blur));
+    backdrop-filter: saturate(140%) blur(var(--glass-blur));
+  }
 }
 .music-player .controls {
   display: flex;
@@ -642,11 +824,17 @@ body {
   color: var(--color-text-muted);
 }
 .music-library {
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
-  box-shadow: var(--shadow);
-  background: var(--color-surface);
+  box-shadow: var(--glass-outer);
+  background: var(--glass-bg);
   overflow: hidden;
+}
+@supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+  .music-library {
+    -webkit-backdrop-filter: saturate(140%) blur(var(--glass-blur));
+    backdrop-filter: saturate(140%) blur(var(--glass-blur));
+  }
 }
 .lib-header {
   display: flex;
@@ -692,8 +880,8 @@ body {
   background: linear-gradient(180deg, rgba(0,0,0,0.04), transparent);
 }
 .lib-play {
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
   border-radius: 10px;
   padding: 6px 10px;
   cursor: pointer;

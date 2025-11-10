@@ -191,7 +191,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <header className="ocean-header">
+      <header className="ocean-header sheen">
         <div className="ocean-header-content">
           <div className="brand">
             <span className="brand-logo" aria-hidden>🗒️</span>
@@ -247,7 +247,7 @@ export default function App() {
 
       {activeView === 'notes' && (
         <main className="ocean-main">
-          <aside className="ocean-sidebar" aria-label="Notes navigation">
+          <aside className="ocean-sidebar sheen" aria-label="Notes navigation">
             <div className="sidebar-header">
               <h2 className="sidebar-title">Your Notes</h2>
               <span className="sidebar-count">{filteredNotes.length}</span>
@@ -256,7 +256,7 @@ export default function App() {
               {filteredNotes.map((n) => (
                 <li
                   key={n.id}
-                  className={`note-list-item ${activeId === n.id ? 'active' : ''}`}
+                  className={`note-list-item hover-elevate ${activeId === n.id ? 'active' : ''}`}
                   onClick={() => selectNote(n.id)}
                   role="button"
                   tabIndex={0}
@@ -274,7 +274,7 @@ export default function App() {
             </ul>
           </aside>
 
-          <section className="ocean-content" aria-live="polite">
+          <section className="ocean-content sheen streak" aria-live="polite">
             {activeNote ? (
               <div className="note-view">
                 <div className="note-view-header">
@@ -330,7 +330,7 @@ export default function App() {
 
       {activeView === 'calendar' && (
         <main className="ocean-main" style={{ gridTemplateColumns: '1fr' }}>
-          <section className="ocean-content">
+          <section className="ocean-content sheen streak">
             <CalendarView />
           </section>
         </main>
@@ -346,7 +346,7 @@ export default function App() {
 
       {isModalOpen && (
         <div className="ocean-modal-backdrop" role="dialog" aria-modal="true">
-          <div className="ocean-modal">
+          <div className="ocean-modal sheen">
             <div className="modal-header">
               <h3 className="modal-title">
                 {modalMode === 'create' ? 'Create Note' : 'Edit Note'}
