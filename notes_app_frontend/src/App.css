@@ -1,4 +1,4 @@
-/* Monochrome Theme */
+ /* Monochrome Theme */
 /* Centralized grayscale variables plus liquid-glass tokens and utilities */
 :root {
   /* Core grayscale tokens (light theme) */
@@ -12,23 +12,44 @@
   --color-accent-contrast: #ffffff;
 
   /* Elevation and radius tokens */
-  --shadow: 0 10px 30px rgba(0,0,0,0.08);
-  --shadow-sm: 0 1px 0 rgba(0,0,0,0.06);
+  --shadow: 0 14px 46px rgba(0,0,0,0.12);
+  --shadow-sm: 0 1px 0 rgba(0,0,0,0.08);
   --radius: 14px;
 
   /* Neutral gradient (no color) */
-  --gradient: linear-gradient(135deg, rgba(0,0,0,0.04), rgba(0,0,0,0));
+  --gradient: linear-gradient(135deg, rgba(0,0,0,0.05), rgba(0,0,0,0));
 
-  /* Liquid glass tokens */
-  --glass-bg: rgba(255,255,255,0.48);           /* light translucent base (slightly higher alpha) */
-  --glass-bg-strong: rgba(255,255,255,0.64);
-  --glass-border: rgba(0,0,0,0.16);
-  --glass-border-strong: rgba(0,0,0,0.24);
-  --glass-inner: inset 0 1px 0 rgba(255,255,255,0.38);
-  --glass-outer: 0 10px 30px rgba(0,0,0,0.12);
-  --glass-blur: 14px; /* slightly increased for visibility */
-  --glass-sheen: linear-gradient(120deg, rgba(255,255,255,0.38) 0%, rgba(255,255,255,0.1) 24%, rgba(0,0,0,0) 60%);
-  --glass-streak: linear-gradient( to right, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0) 60%);
+  /* Liquid glass tokens (centralized intensity controls) */
+  --glass-opacity: 0.42;                /* base glass translucency (light) */
+  --glass-opacity-strong: 0.58;         /* stronger glass (modals/header) */
+  --glass-contrast: 1.1;                /* slight contrast bump for clarity */
+  --glass-saturation: 1.35;             /* slight saturation for background separation */
+
+  --glass-bg: rgba(255,255,255,var(--glass-opacity));
+  --glass-bg-strong: rgba(255,255,255,var(--glass-opacity-strong));
+  --glass-border: rgba(0,0,0,0.18);
+  --glass-border-strong: rgba(0,0,0,0.26);
+  --glass-inner: inset 0 1px 0 rgba(255,255,255,0.42);
+  --glass-outer: 0 16px 48px rgba(0,0,0,0.16);  /* deeper outer shadow for depth */
+  --glass-inner-shadow: inset 0 8px 24px rgba(0,0,0,0.06); /* soft inner for depth */
+
+  /* Increase blur for a stronger liquid-glass feel */
+  --glass-blur: 22px; /* target ~18-24px */
+
+  /* Specular highlights (brighter and larger) */
+  --glass-sheen: linear-gradient(
+    115deg,
+    rgba(255,255,255,0.55) 0%,
+    rgba(255,255,255,0.28) 24%,
+    rgba(255,255,255,0.08) 42%,
+    rgba(255,255,255,0) 65%
+  );
+  --glass-streak: linear-gradient(
+    to right,
+    rgba(255,255,255,0.55) 0%,
+    rgba(255,255,255,0.12) 34%,
+    rgba(255,255,255,0) 68%
+  );
 
   /* Motion */
   --elevate: cubic-bezier(.2,.7,.2,1);
@@ -45,18 +66,38 @@
   --color-accent: #ffffff;
   --color-accent-contrast: #000000;
 
-  --shadow: 0 10px 30px rgba(0,0,0,0.35);
-  --shadow-sm: 0 1px 0 rgba(0,0,0,0.2);
+  --shadow: 0 18px 52px rgba(0,0,0,0.5);
+  --shadow-sm: 0 1px 0 rgba(0,0,0,0.28);
 
-  --gradient: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0,0,0,0));
+  --gradient: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(0,0,0,0));
 
-  /* Dark glass tuning */
-  --glass-bg: rgba(21,21,21,0.5);
-  --glass-bg-strong: rgba(21,21,21,0.72);
-  --glass-border: rgba(255,255,255,0.12);
-  --glass-border-strong: rgba(255,255,255,0.2);
-  --glass-sheen: linear-gradient(120deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0) 60%);
-  --glass-streak: linear-gradient(to right, rgba(255,255,255,0.18), rgba(255,255,255,0.03) 28%, rgba(255,255,255,0) 60%);
+  /* Dark glass tuning (match intensity while maintaining readability) */
+  --glass-opacity: 0.34;
+  --glass-opacity-strong: 0.52;
+  --glass-contrast: 1.08;
+  --glass-saturation: 1.2;
+
+  --glass-bg: rgba(21,21,21,var(--glass-opacity));
+  --glass-bg-strong: rgba(21,21,21,var(--glass-opacity-strong));
+  --glass-border: rgba(255,255,255,0.14);
+  --glass-border-strong: rgba(255,255,255,0.22);
+  --glass-inner: inset 0 1px 0 rgba(255,255,255,0.24);
+  --glass-outer: 0 18px 58px rgba(0,0,0,0.55);
+  --glass-inner-shadow: inset 0 10px 26px rgba(0,0,0,0.18);
+
+  --glass-sheen: linear-gradient(
+    115deg,
+    rgba(255,255,255,0.22) 0%,
+    rgba(255,255,255,0.12) 28%,
+    rgba(255,255,255,0.06) 42%,
+    rgba(255,255,255,0) 65%
+  );
+  --glass-streak: linear-gradient(
+    to right,
+    rgba(255,255,255,0.24) 0%,
+    rgba(255,255,255,0.06) 28%,
+    rgba(255,255,255,0) 62%
+  );
 }
 
 /* Base reset */
@@ -91,7 +132,7 @@ body {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
-  box-shadow: var(--glass-outer), var(--glass-inner);
+  box-shadow: var(--glass-outer), var(--glass-inner), var(--glass-inner-shadow);
   overflow: hidden;
   background-clip: padding-box; /* ensure edges remain crisp */
   isolation: isolate;           /* create new stacking context for overlays */
@@ -99,16 +140,20 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .glass {
-    -webkit-backdrop-filter: saturate(160%) blur(var(--glass-blur));
-    backdrop-filter: saturate(160%) blur(var(--glass-blur));
+    /* boost contrast/saturation with higher blur */
+    -webkit-backdrop-filter: saturate(var(--glass-saturation)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    backdrop-filter: saturate(var(--glass-saturation)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
     background: var(--glass-bg);
   }
 }
-/* Fallback for browsers without backdrop-filter: make translucency more visible */
+/* Fallback for browsers without backdrop-filter: make translucency more visible and keep contrast */
 @supports not ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .glass {
-    background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(0,0,0,0.02)) , var(--glass-bg);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.16), rgba(0,0,0,0.04)) ,
+      var(--glass-bg);
     border-color: var(--glass-border-strong);
+    box-shadow: 0 18px 46px rgba(0,0,0,0.2);
   }
 }
 
@@ -127,41 +172,42 @@ body {
 .sheen::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -6% -4%;
   background: var(--glass-sheen);
   pointer-events: none;
   mix-blend-mode: screen;
-  opacity: .55;
+  opacity: .68;
 }
 [data-theme="dark"] .sheen::before {
-  opacity: .35;
+  opacity: .42;
 }
 
-/* Specular light streak accent (subtle) */
+/* Specular light streak accent (subtle but more pronounced) */
 .streak::after {
   content: "";
   position: absolute;
-  top: -30%;
-  left: -20%;
-  width: 60%;
-  height: 200%;
+  top: -35%;
+  left: -18%;
+  width: 70%;
+  height: 220%;
   background: var(--glass-streak);
-  transform: rotate(8deg);
+  transform: rotate(10deg);
   pointer-events: none;
-  opacity: .25;
-  filter: blur(1px);
+  opacity: .32;
+  filter: blur(1.2px);
 }
 [data-theme="dark"] .streak::after {
-  opacity: .18;
+  opacity: .22;
 }
 
 /* Interactive elevation & parallax-lite */
 .hover-elevate {
-  transition: transform .25s var(--elevate), box-shadow .25s var(--elevate), border-color .25s var(--elevate), background .25s var(--elevate);
+  transition: transform .25s var(--elevate), box-shadow .25s var(--elevate), border-color .25s var(--elevate), background .25s var(--elevate), filter .25s var(--elevate);
 }
 .hover-elevate:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  transform: translateY(-3px);
+  box-shadow: 0 22px 54px rgba(0,0,0,0.22);
+  filter: saturate(1.02);
 }
 @media (prefers-reduced-motion: reduce) {
   .hover-elevate:hover { transform: none; }
@@ -186,19 +232,19 @@ body {
   top: 0;
   z-index: 20;
   border-bottom: 1px solid var(--color-border);
-  /* apply glass */
-  background: var(--glass-bg);
+  /* apply strong glass */
+  background: var(--glass-bg-strong);
   background-clip: padding-box;
   isolation: isolate;
   paint-order: stroke fill markers;
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .ocean-header {
-    -webkit-backdrop-filter: saturate(160%) blur(calc(var(--glass-blur) - 4px));
-    backdrop-filter: saturate(160%) blur(calc(var(--glass-blur) - 4px));
+    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .15)) contrast(calc(var(--glass-contrast) + .05)) blur(calc(var(--glass-blur) - 2px));
+    backdrop-filter: saturate(calc(var(--glass-saturation) + .15)) contrast(calc(var(--glass-contrast) + .05)) blur(calc(var(--glass-blur) - 2px));
   }
 }
-.ocean-header.sheen::before { opacity: .4; }
+.ocean-header.sheen::before { opacity: .5; }
 
 .ocean-header-content {
   display: flex;
@@ -208,6 +254,11 @@ body {
   padding: 16px clamp(16px, 4vw, 32px);
   max-width: 1200px;
   margin: 0 auto;
+  /* inner gradient mask behind text for WCAG contrast */
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.0));
+}
+[data-theme="dark"] .ocean-header-content {
+  background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0));
 }
 
 .brand {
@@ -256,8 +307,8 @@ body {
   .search-input,
   .field-input,
   .field-textarea {
-    -webkit-backdrop-filter: saturate(130%) blur(calc(var(--glass-blur) - 6px));
-    backdrop-filter: saturate(130%) blur(calc(var(--glass-blur) - 6px));
+    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .05)) contrast(var(--glass-contrast)) blur(calc(var(--glass-blur) - 6px));
+    backdrop-filter: saturate(calc(var(--glass-saturation) + .05)) contrast(var(--glass-contrast)) blur(calc(var(--glass-blur) - 6px));
   }
 }
 
@@ -307,8 +358,8 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .ocean-sidebar {
-    -webkit-backdrop-filter: saturate(160%) blur(var(--glass-blur));
-    backdrop-filter: saturate(160%) blur(var(--glass-blur));
+    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
   }
 }
 .ocean-sidebar.sheen::before { opacity: .35; }
@@ -357,8 +408,8 @@ body {
   position: relative;
 }
 .note-list-item:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.16);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.22);
   border-color: var(--glass-border-strong);
 }
 .note-list-item.active {
@@ -400,12 +451,28 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .ocean-content {
-    -webkit-backdrop-filter: saturate(165%) blur(calc(var(--glass-blur) + 2px));
-    backdrop-filter: saturate(165%) blur(calc(var(--glass-blur) + 2px));
+    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .15)) contrast(calc(var(--glass-contrast) + .05)) blur(calc(var(--glass-blur) + 2px));
+    backdrop-filter: saturate(calc(var(--glass-saturation) + .15)) contrast(calc(var(--glass-contrast) + .05)) blur(calc(var(--glass-blur) + 2px));
   }
 }
-.ocean-content.sheen::before { opacity: .4; }
-.ocean-content.streak::after { opacity: .2; }
+.ocean-content.sheen::before { opacity: .55; }
+.ocean-content.streak::after { opacity: .28; }
+
+/* add subtle inner top gradient to support text contrast in content headings */
+.ocean-content .note-view-header,
+.calendar-grid-head,
+.lib-header {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.0)),
+    var(--color-surface-2);
+}
+[data-theme="dark"] .ocean-content .note-view-header,
+[data-theme="dark"] .calendar-grid-head,
+[data-theme="dark"] .lib-header {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.0)),
+    var(--color-surface-2);
+}
 
 .note-view {
   display: flex;
@@ -475,8 +542,8 @@ body {
   box-shadow: var(--shadow-sm);
 }
 .ocean-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.22);
   border-color: var(--glass-border-strong);
 }
 .ocean-btn:active {
@@ -542,9 +609,9 @@ body {
   pointer-events: none;
 }
 .fab-create:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.45);
-  filter: brightness(1.05);
+  transform: translateY(-3px) scale(1.035);
+  box-shadow: 0 26px 56px rgba(0, 0, 0, 0.5);
+  filter: brightness(1.08);
 }
 .fab-create:active {
   transform: translateY(0) scale(0.98);
@@ -554,7 +621,7 @@ body {
 .ocean-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0,0,0,0.6);
   display: grid;
   place-items: center;
   padding: 16px;
@@ -567,7 +634,7 @@ body {
   background: var(--glass-bg-strong);
   border: 1px solid var(--glass-border-strong);
   border-radius: 16px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 28px 72px rgba(0,0,0,0.45);
   overflow: hidden;
   animation: slideIn .18s ease;
   position: relative;
@@ -576,11 +643,11 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .ocean-modal {
-    -webkit-backdrop-filter: saturate(170%) blur(calc(var(--glass-blur) + 3px));
-    backdrop-filter: saturate(170%) blur(calc(var(--glass-blur) + 3px));
+    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .2)) contrast(calc(var(--glass-contrast) + .08)) blur(calc(var(--glass-blur) + 4px));
+    backdrop-filter: saturate(calc(var(--glass-saturation) + .2)) contrast(calc(var(--glass-contrast) + .08)) blur(calc(var(--glass-blur) + 4px));
   }
 }
-.ocean-modal.sheen::before { opacity: .45; }
+.ocean-modal.sheen::before { opacity: .55; }
 
 .modal-header {
   display: flex;
@@ -588,13 +655,14 @@ body {
   justify-content: space-between;
   padding: 12px 14px;
   border-bottom: 1px dashed var(--color-border);
-  background: linear-gradient(180deg, rgba(0,0,0,0.04), transparent);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0)),
+    linear-gradient(180deg, rgba(0,0,0,0.04), transparent);
 }
-
-.modal-title {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 700;
+[data-theme="dark"] .modal-header {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0)),
+    linear-gradient(180deg, rgba(0,0,0,0.04), transparent);
 }
 
 .modal-body {
@@ -637,7 +705,14 @@ body {
   gap: 10px;
   padding: 12px 14px;
   border-top: 1px dashed var(--color-border);
-  background: linear-gradient(0deg, rgba(0,0,0,0.04), transparent);
+  background:
+    linear-gradient(0deg, rgba(255,255,255,0.6), rgba(255,255,255,0)),
+    linear-gradient(0deg, rgba(0,0,0,0.04), transparent);
+}
+[data-theme="dark"] .modal-footer {
+  background:
+    linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0)),
+    linear-gradient(0deg, rgba(0,0,0,0.04), transparent);
 }
 
 /* Animations */
@@ -695,8 +770,8 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .calendar-grid {
-    -webkit-backdrop-filter: saturate(160%) blur(var(--glass-blur));
-    backdrop-filter: saturate(160%) blur(var(--glass-blur));
+    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
   }
 }
 .calendar-grid-head {
@@ -731,17 +806,17 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .calendar-cell {
-    -webkit-backdrop-filter: saturate(145%) blur(calc(var(--glass-blur) - 6px));
-    backdrop-filter: saturate(145%) blur(calc(var(--glass-blur) - 6px));
+    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .05)) contrast(var(--glass-contrast)) blur(calc(var(--glass-blur) - 6px));
+    backdrop-filter: saturate(calc(var(--glass-saturation) + .05)) contrast(var(--glass-contrast)) blur(calc(var(--glass-blur) - 6px));
   }
 }
 .calendar-cell.week {
   min-height: 120px;
 }
 .calendar-cell:hover {
-  background: linear-gradient(180deg, rgba(0,0,0,0.04), transparent);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow);
+  background: linear-gradient(180deg, rgba(0,0,0,0.06), transparent);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.22);
 }
 .calendar-cell .date-num {
   font-size: 12px;
@@ -775,15 +850,22 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .calendar-day-card {
-    -webkit-backdrop-filter: saturate(160%) blur(var(--glass-blur));
-    backdrop-filter: saturate(160%) blur(var(--glass-blur));
+    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
   }
 }
 .calendar-day-date {
   padding: 12px;
   font-weight: 700;
-  background: var(--color-surface-2);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0)),
+    var(--color-surface-2);
   border-bottom: 1px dashed var(--color-border);
+}
+[data-theme="dark"] .calendar-day-date {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0)),
+    var(--color-surface-2);
 }
 .calendar-day-body {
   padding: 16px;
@@ -839,8 +921,8 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .music-player {
-    -webkit-backdrop-filter: saturate(160%) blur(var(--glass-blur));
-    backdrop-filter: saturate(160%) blur(var(--glass-blur));
+    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
   }
 }
 .music-player .controls {
@@ -870,8 +952,8 @@ body {
 }
 @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
   .music-library {
-    -webkit-backdrop-filter: saturate(160%) blur(var(--glass-blur));
-    backdrop-filter: saturate(160%) blur(var(--glass-blur));
+    -webkit-backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
+    backdrop-filter: saturate(calc(var(--glass-saturation) + .1)) contrast(var(--glass-contrast)) blur(var(--glass-blur));
   }
 }
 .lib-header {
@@ -880,7 +962,14 @@ body {
   align-items: center;
   padding: 10px 12px;
   border-bottom: 1px dashed var(--color-border);
-  background: var(--color-surface-2);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0)),
+    var(--color-surface-2);
+}
+[data-theme="dark"] .lib-header {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0)),
+    var(--color-surface-2);
 }
 .lib-title {
   margin: 0;
