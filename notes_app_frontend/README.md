@@ -22,6 +22,13 @@ Notes:
 - This project uses Create React App (CRA). The dev server listens on the `PORT` environment variable, defaulting to `3000`. We do not set a custom port in scripts to avoid conflicts with preview systems.
 - Any `REACT_APP_*` variables are optional; the app tolerates them being undefined. See `src/envSafe.js` which is imported in `src/index.js` to normalize empty values.
 
+### `npm run dev`
+
+Cross‑platform dev convenience that maps CLI flags to CRA env:
+- Example: `npm run dev -- --port 3000 --host 0.0.0.0`
+- Defaults to `PORT=3000` and `HOST=0.0.0.0` if not provided.
+- Does not use or override `REACT_APP_PORT` to avoid conflicts.
+
 ### `npm test`
 
 Launches the test runner in interactive watch mode.

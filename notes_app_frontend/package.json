@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "sh -c \"PORT=${npm_config_port:-$PORT} HOST=${npm_config_host:-$HOST} react-scripts start\"",
+    "dev": "node scripts/dev-shim.js --",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
