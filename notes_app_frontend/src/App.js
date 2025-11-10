@@ -191,7 +191,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <header className="ocean-header sheen">
+      <header className="ocean-header glass sheen">
         <div className="ocean-header-content">
           <div className="brand">
             <span className="brand-logo" aria-hidden>🗒️</span>
@@ -247,7 +247,7 @@ export default function App() {
 
       {activeView === 'notes' && (
         <main className="ocean-main">
-          <aside className="ocean-sidebar sheen" aria-label="Notes navigation">
+          <aside className="ocean-sidebar glass sheen" aria-label="Notes navigation">
             <div className="sidebar-header">
               <h2 className="sidebar-title">Your Notes</h2>
               <span className="sidebar-count">{filteredNotes.length}</span>
@@ -274,7 +274,7 @@ export default function App() {
             </ul>
           </aside>
 
-          <section className="ocean-content sheen streak" aria-live="polite">
+          <section className="ocean-content glass sheen streak" aria-live="polite">
             {activeNote ? (
               <div className="note-view">
                 <div className="note-view-header">
@@ -330,7 +330,7 @@ export default function App() {
 
       {activeView === 'calendar' && (
         <main className="ocean-main" style={{ gridTemplateColumns: '1fr' }}>
-          <section className="ocean-content sheen streak">
+          <section className="ocean-content glass sheen streak">
             <CalendarView />
           </section>
         </main>
@@ -338,7 +338,7 @@ export default function App() {
 
       {activeView === 'music' && (
         <main className="ocean-main" style={{ gridTemplateColumns: '1fr' }}>
-          <section className="ocean-content">
+          <section className="ocean-content glass">
             <MusicPlayer />
           </section>
         </main>
