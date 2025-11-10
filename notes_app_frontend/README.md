@@ -5,7 +5,7 @@ This project provides a minimal React template with a clean, modern UI and minim
 ## Features
 
 - **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
+- **Modern UI**: Clean, responsive design
 - **Fast**: Minimal dependencies for quick loading times
 - **Simple**: Easy to understand and modify
 
@@ -38,56 +38,67 @@ Launches the test runner in interactive watch mode.
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## Customization
+## Theme and Customization
 
-### Colors
+### Monochrome (Black & White) Theme
 
-The main brand colors are defined as CSS variables in `src/App.css`:
+The app uses a centralized monochrome theme based on CSS variables in `src/App.css`. Adjust these variables to tweak the palette:
 
 ```css
 :root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
+  --color-bg: #ffffff;
+  --color-surface: #f7f7f7;
+  --color-text: #111111;
+  --color-text-muted: #666666;
+  --color-border: #e5e5e5;
+  --color-accent: #000000;           /* primary accent */
+  --color-accent-contrast: #ffffff;  /* text on accent */
+  --shadow: 0 10px 30px rgba(0,0,0,0.08);
+  --radius: 14px;
+}
+
+[data-theme="dark"] {
+  --color-bg: #0f0f10;
+  --color-surface: #151515;
+  --color-text: #eeeeee;
+  --color-text-muted: #b0b0b0;
+  --color-border: rgba(255,255,255,0.08);
+  --color-accent: #ffffff;           /* accent flips in dark mode */
+  --color-accent-contrast: #000000;
 }
 ```
+
+- Buttons, links, focus states, sidebar, header, and modals all reference these variables.  
+- No colored accents (blue/amber/red) are used; all UI is grayscale.
 
 ### Components
 
 This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
 
 Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
+- Buttons (`.ocean-btn`, variants: `.primary`, `.secondary`, `.danger`, `.ghost`)
+- Layout (`.ocean-header`, `.ocean-main`, `.ocean-sidebar`, `.ocean-content`)
+- Modal (`.ocean-modal`, `.ocean-modal-backdrop`)
+- Inputs (`.field-input`, `.field-textarea`, `.search-input`)
 
 ## Learn More
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
 ### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Moved: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
 ### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Moved: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
 ### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Moved: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
 ### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Moved: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
 ### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Moved: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
 ### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Moved: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

@@ -2,13 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import './App.css';
 
 /**
- * Ocean Professional Theme Tokens (JS side to match CSS variables)
- * primary: #2563EB (ocean blue)
- * secondary/success: #F59E0B (amber)
- * error: #EF4444 (red)
- * background: #f9fafb
- * surface: #ffffff
- * text: #111827
+ * Monochrome Theme Tokens are defined via CSS variables in App.css.
+ * All interactive accents use black/white and neutral grays only.
  */
 
 // Helpers
@@ -162,8 +157,8 @@ export default function App() {
         },
         {
           id: uuid(),
-          title: 'Ocean Professional Theme',
-          content: 'Blue primary with amber accents, subtle shadows, and smooth transitions.',
+          title: 'Monochrome Theme',
+          content: 'Black-and-white palette with neutral grays, high contrast, and smooth transitions.',
           createdAt: Date.now() - 1000 * 60 * 20,
           updatedAt: Date.now() - 1000 * 60 * 10,
         },
